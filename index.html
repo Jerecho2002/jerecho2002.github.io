@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-colors duration-300">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerecho — Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+  tailwind.config = {
+    content: [],
+    darkMode: 'class',
+    theme: {
+      extend: {}
+    }
+  }
+</script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Syne', sans-serif;
+        }
+        * {
+            font-family: var(--font-mono);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: var(--font-display);
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.09) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.09) 1px, transparent 1px);
+        }
+
+        .cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #3b82f6;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #3b82f6;
+            animation: typing 2.5s steps(25) 0.5s both, blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-caret {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .fade-in-1 {
+            animation-delay: 0.10s;
+        }
+
+        .fade-in-2 {
+            animation-delay: 0.25s;
+        }
+
+        .fade-in-3 {
+            animation-delay: 0.40s;
+        }
+
+        .fade-in-4 {
+            animation-delay: 0.55s;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-bottom: 8px;
+        }
+
+        /* ── Terminal ── */
+        .terminal {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red {
+            background: #ff5f57;
+        }
+
+        .dot-yellow {
+            background: #febc2e;
+        }
+
+        .dot-green {
+            background: #28c840;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: #e6edf3;
+            line-height: 1.9;
+        }
+
+        .t-prompt {
+            color: #3b82f6;
+        }
+
+        .t-cmd {
+            color: #79c0ff;
+        }
+
+        .t-comment {
+            color: #6e7681;
+        }
+
+        .t-string {
+            color: #a5d6ff;
+        }
+
+        .t-key {
+            color: #ff7b72;
+        }
+
+        .t-val {
+            color: #ffa657;
+        }
+
+        .t-green {
+            color: #28c840;
+        }
+
+        /* ── Tag ── */
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            padding: 2px 10px;
+            border-radius: 4px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            white-space: nowrap;
+        }
+
+        /* ── Nav link ── */
+        .nav-link {
+            position: relative;
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ── Project card ── */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.35);
+            box-shadow: 0 0 24px rgba(59, 130, 246, 0.09);
+        }
+
+        /* ── Journey timeline ── */
+        .journey-wrap {
+            position: relative;
+            padding-left: 56px;
+        }
+
+        .journey-line {
+            position: absolute;
+            left: 18px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, rgba(59, 130, 246, 0.05));
+        }
+
+        .journey-dot {
+            position: absolute;
+            left: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.12);
+            border: 2px solid #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            z-index: 1;
+        }
+
+        /* ── Skill bar ── */
+        .skill-fill {
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ── Status pulse ── */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+            }
+        }
+
+        /* ── Hero glow ── */
+        .hero-glow {
+            position: absolute;
+            width: 480px;
+            height: 480px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+
+        .mobile-nav-link {
+            position: relative;
+            padding: 4px 0;
+            font-weight: 500;
+        }
+
+        .mobile-nav-link:hover {
+            color: #3b82f6;
+        }
+
+        .mobile-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .mobile-nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-[#0d1117] dark:text-gray-100 transition-colors duration-300">
+
+    <nav
+        class="fixed w-full bg-white/80 dark:bg-[#0d1117]/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 z-50 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+         <div class="flex items-center gap-2">
+            <span class="text-blue-500 text-sm">~/$</span>
+            <a href="#" 
+            onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;"
+            class="text-base font-bold tracking-tight hover:text-blue-500 transition-colors duration-200"
+            style="font-family:var(--font-display)">
+                jerecho.dev
+            </a>
+        </div>
+
+            <div class="hidden md:flex items-center gap-6">
+                <div class="flex gap-6">
+                    <a href="#about" class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">about</a>
+                    <a href="#journey" class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">journey</a>
+                    <a href="#stack" class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">stack</a>
+                    <a href="#projects"
+                        class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">projects</a>
+                    <a href="#contact" class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">contact</a>
+                </div>
+
+                <div class="flex items-center gap-2 text-xs text-green-600 dark:text-green-400">
+                    <div class="status-dot"></div>
+                    open to work
+                </div>
+
+                <button id="theme-toggle" aria-label="Toggle dark mode"
+                    class="relative w-16 h-9 bg-gray-200 dark:bg-zinc-700 rounded-3xl flex items-center px-1 transition-all duration-500 shadow-inner hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500/50">
+                    <span
+                        class="absolute left-1 w-7 h-7 bg-white dark:bg-zinc-900 rounded-2xl shadow-lg transform transition-all duration-500 flex items-center justify-center">
+                        <svg id="sun-icon" class="w-4 h-4 text-amber-400 dark:hidden transition-all"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 3v1m0 16v1m8.485-8.485h-1M4.515 12.515h-1M16.95 7.05l-.707.707M7.757 16.243l-.707.707M16.95 16.95l-.707-.707M7.757 7.757l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg id="moon-icon" class="w-4 h-4 text-zinc-300 hidden dark:block transition-all"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </span>
+                </button>
+            </div>
+
+            <button id="mobile-menu-btn"
+                class="md:hidden w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors">
+                <svg id="hamburger" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6h12v12" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-sidebar"
+        class="fixed inset-y-0 right-0 w-72 bg-white dark:bg-[#161b22] shadow-2xl transform translate-x-full transition-transform duration-300 z-50 md:hidden flex flex-col">
+
+        <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="#" 
+                    onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
+                <h1 class="text-lg font-bold tracking-tight" style="font-family:var(--font-display)">Home</h1>
+                </a>
+            </div>
+            <button id="close-sidebar" class="text-gray-500 dark:text-gray-400 hover:text-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6h12v12" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="flex-1 px-6 py-8 space-y-6 overflow-y-auto">
+            <div class="flex flex-col gap-6 text-lg">
+                <a href="#about" onclick="closeSidebar()"
+                    class="mobile-nav-link text-gray-600 dark:text-gray-300 hover:text-blue-500 transition">About</a>
+                <a href="#journey" onclick="closeSidebar()"
+                    class="mobile-nav-link text-gray-600 dark:text-gray-300 hover:text-blue-500 transition">Journey</a>
+                <a href="#stack" onclick="closeSidebar()"
+                    class="mobile-nav-link text-gray-600 dark:text-gray-300 hover:text-blue-500 transition">Stack</a>
+                <a href="#projects" onclick="closeSidebar()"
+                    class="mobile-nav-link text-gray-600 dark:text-gray-300 hover:text-blue-500 transition">Projects</a>
+                <a href="#contact" onclick="closeSidebar()"
+                    class="mobile-nav-link text-gray-600 dark:text-gray-300 hover:text-blue-500 transition">Contact</a>
+            </div>
+
+            <div class="pt-6 border-t border-gray-200 dark:border-gray-800">
+                <div class="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                    <div class="status-dot"></div>
+                    <span class="font-medium">Open to work / internship</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-200 dark:border-gray-800 text-xs text-gray-500">
+            <p>🇵🇭 Cebu City</p>
+            <p class="mt-1">Still learning • Always building</p>
+        </div>
+    </div>
+
+    <div id="sidebar-overlay"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden md:hidden z-40 transition-opacity duration-300">
+    </div>
+
+    <section class="min-h-screen flex items-center justify-center text-center px-6 relative overflow-hidden grid-bg">
+        <div class="hero-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute"></div>
+        <div class="relative z-10 max-w-2xl mx-auto">
+            <div class="fade-in fade-in-1 flex items-center justify-center gap-2 text-sm text-gray-400 mb-6">
+                <span class="text-blue-500">▶</span>
+                <span class="typewriter">WHO AM I</span>
+            </div>
+            <h2 class="fade-in fade-in-2 text-5xl md:text-7xl font-extrabold mb-4 tracking-tight leading-none"
+                style="font-family:var(--font-display)">
+                Hi, I'm <span class="text-blue-500">Jerecho</span>
+            </h2>
+            <p class="fade-in fade-in-3 text-gray-500 dark:text-gray-400 text-sm mb-2">
+                <span class="text-blue-400">//</span> CS Student · Aspiring Web Developer · Laravel &amp; Vue Learner
+            </p>
+            <p class="fade-in fade-in-3 text-gray-400 dark:text-gray-500 text-xs mb-10">
+                Still learning — but already building real things.
+            </p>
+            <div class="fade-in fade-in-4 flex flex-wrap justify-center gap-3">
+                <a href="#projects"
+                    class="bg-blue-500 text-white px-6 py-2.5 rounded-md text-sm hover:bg-blue-600 hover:scale-105 transition shadow-lg shadow-blue-500/20">View
+                    Projects</a>
+                <a href="#contact"
+                    class="border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 px-6 py-2.5 rounded-md text-sm hover:border-blue-500 hover:text-blue-500 transition">Contact
+                    Me</a>
+            </div>
+            <div
+                class="fade-in fade-in-4 mt-16 grid grid-cols-3 gap-6 max-w-sm mx-auto border-t border-gray-200 dark:border-gray-800 pt-10">
+                <div>
+                    <div class="text-2xl font-bold text-blue-500" style="font-family:var(--font-display)">4</div>
+                    <div class="text-xs text-gray-500 mt-1">big projects</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-blue-500" style="font-family:var(--font-display)">4</div>
+                    <div class="text-xs text-gray-500 mt-1">years learning</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-blue-500" style="font-family:var(--font-display)">∞</div>
+                    <div class="text-xs text-gray-500 mt-1">still growing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 bg-white dark:bg-[#161b22] transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-6">
+            <p class="section-label">01 / about</p>
+            <h3 class="text-4xl font-bold mb-12" style="font-family:var(--font-display)">About Me</h3>
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm mb-4">
+                        I'm <span class="text-blue-500 font-semibold">Jerecho</span>, a Bachelor of Science in
+                        Information Technology student from
+                        the Philippines 🇵🇭 who's been on a 4-year journey — from writing my first <code
+                            class="text-blue-400 bg-gray-100 dark:bg-gray-800 px-1 rounded">printf("Hello World")</code>
+                        in C, all the way to building full web systems with Laravel and Vue.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm mb-4">
+                        I'm not a professional developer yet — and I'll be upfront about that. But I've built <span
+                            class="text-blue-500 font-semibold">4 real, working systems</span> that solve actual
+                        problems. During my OJT, I built two systems in just 3–4 months while learning the frameworks on
+                        the go. For my capstone, I shipped a POS System and a Student Offense System.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm mb-6">
+                        I'm actively looking for opportunities where I can keep learning, contribute meaningfully, and
+                        grow into the developer I'm working toward becoming.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Tailwind CSS</span>
+                        <span class="tag">HTML / CSS</span>
+                        <span class="tag">MySQL</span>
+                    </div>
+                </div>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot dot-red"></div>
+                        <div class="dot dot-yellow"></div>
+                        <div class="dot dot-green"></div>
+                        <span style="color:#6e7681;font-size:0.72rem;margin-left:8px">about.json</span>
+                    </div>
+                    <div class="terminal-body text-xs">
+                        <span class="t-comment">// $ cat about.json</span><br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-string">"Jerecho"</span>,<br>
+                        &nbsp;&nbsp;<span class="t-key">"status"</span>: <span class="t-string">"CS Student / Fresh
+                            Grad"</span>,<br>
+                        &nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-string">"Philippines
+                            🇵🇭"</span>,<br>
+                        &nbsp;&nbsp;<span class="t-key">"experience"</span>: <span class="t-string">"OJT (3–4
+                            months)"</span>,<br>
+                        &nbsp;&nbsp;<span class="t-key">"projects_built"</span>: <span class="t-val">4</span>,<br>
+                        &nbsp;&nbsp;<span class="t-key">"currently_learning"</span>: [<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-string">"Laravel deeper patterns"</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-string">"Vue Composition API"</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-string">"REST API best practices"</span><br>
+                        &nbsp;&nbsp;],<br>
+                        &nbsp;&nbsp;<span class="t-key">"open_to_work"</span>: <span class="t-val">true</span><br>
+                        }<br>
+                        <br>
+                        <span class="t-prompt">~$</span> <span class="cursor"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="journey" class="py-24 grid-bg transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-6">
+            <p class="section-label">02 / journey</p>
+            <h3 class="text-4xl font-bold mb-4" style="font-family:var(--font-display)">My Learning Journey</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-xs mb-12 max-w-xl">
+                <span class="text-blue-400">//</span> 4 years of grinding — from "Hello World" in C to shipping real web
+                systems.
+            </p>
+
+            <div class="journey-wrap">
+                <div class="journey-line"></div>
+
+                <div class="relative mb-14">
+                    <div class="flex flex-wrap items-center gap-3 mb-2">
+                        <h4 class="text-lg font-bold" style="font-family:var(--font-display)">1st – 2nd Year</h4>
+                        <span class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-400 px-3 py-1 rounded-full">C &amp;
+                            C++ Fundamentals</span>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-3">
+                        Started from zero. Learned <span class="text-blue-400">C</span> and <span
+                            class="text-blue-400">C++</span> — the building blocks of programming. For loops, while
+                        loops, conditionals, functions, arrays, pointers, and basic problem-solving. These years built
+                        the mental model for how I think about code today.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">C</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">Loops</span>
+                        <span class="tag">Arrays</span>
+                        <span class="tag">Functions</span>
+                        <span class="tag">Conditionals</span>
+                        <span class="tag">Pointers</span>
+                    </div>
+                </div>
+
+                <div class="relative mb-14">
+                    <div class="flex flex-wrap items-center gap-3 mb-2">
+                        <h4 class="text-lg font-bold" style="font-family:var(--font-display)">3rd Year</h4>
+                        <span class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-400 px-3 py-1 rounded-full">Java ·
+                            OOP · GUI</span>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-3">
+                        Moved into <span class="text-blue-400">Java</span> and learned Object-Oriented Programming —
+                        classes, objects, inheritance, encapsulation, and polymorphism. Also built desktop applications
+                        with <span class="text-blue-400">Java Swing (GUI)</span>. This year changed how I think about
+                        structuring code. OOP was a big shift.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Java</span>
+                        <span class="tag">OOP</span>
+                        <span class="tag">Classes &amp; Objects</span>
+                        <span class="tag">Inheritance</span>
+                        <span class="tag">Encapsulation</span>
+                        <span class="tag">Java Swing / GUI</span>
+                    </div>
+                </div>
+
+                <div class="relative mb-14">
+                    <div class="flex flex-wrap items-center gap-3 mb-2">
+                        <h4 class="text-lg font-bold" style="font-family:var(--font-display)">4th Year</h4>
+                        <span class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-400 px-3 py-1 rounded-full">PHP ·
+                            Laravel · Web Dev</span>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-3">
+                        Discovered web development. Started with raw <span class="text-blue-400">PHP</span> and MySQL,
+                        then moved to <span class="text-blue-400">Laravel</span>. Learned database design, Eloquent ORM,
+                        authentication, and how to build SaaS-style multi-feature web applications. Added <span
+                            class="text-blue-400">Vue.js</span> and <span class="text-blue-400">Tailwind CSS</span> to
+                        complete the stack.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">PHP</span>
+                        <span class="tag">Laravel</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Tailwind CSS</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">SaaS Concepts</span>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="flex flex-wrap items-center gap-3 mb-2">
+                        <h4 class="text-lg font-bold" style="font-family:var(--font-display)">OJT</h4>
+                        <span
+                            class="text-xs bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-3 py-1 rounded-full">First
+                            Real-World Experience</span>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-3">
+                        My first real development experience outside the classroom. In just <span
+                            class="text-blue-400">3–4 months</span>, I built two complete, working systems — an
+                        Inventory System and a Room System — while still actively learning the frameworks. Taught me how
+                        to read docs under pressure, debug real bugs, and ship something that actually works for real
+                        users.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Tailwind</span>
+                        <span class="tag">Real Deadlines 🔥</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stack" class="py-24 bg-white dark:bg-[#161b22] transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-6">
+            <p class="section-label">03 / stack</p>
+            <h3 class="text-4xl font-bold mb-4" style="font-family:var(--font-display)">Tech Stack</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-xs mb-12">
+                <span class="text-blue-400">//</span> What I know and how comfortable I am — keeping it honest.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-10 mb-12">
+                <div>
+                    <p class="text-xs text-blue-500 mb-5 uppercase tracking-widest">// Backend & Languages</p>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>PHP / Laravel</span><span
+                                    class="text-gray-400">Proficient ⭐⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 rounded-full skill-fill" style="width:80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>MySQL</span><span
+                                    class="text-gray-400">Experienced ⭐⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 rounded-full skill-fill" style="width:75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>Java (OOP + GUI)</span><span
+                                    class="text-gray-400">Experienced ⭐⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-400 rounded-full skill-fill" style="width:75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>C / C++ (fundamentals)</span><span
+                                    class="text-gray-400">Intermediate ⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-300 rounded-full skill-fill" style="width:55%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs text-blue-500 mb-5 uppercase tracking-widest">// Frontend</p>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>HTML / CSS</span><span
+                                    class="text-gray-400">Expert ⭐⭐⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 rounded-full skill-fill" style="width:90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>Tailwind CSS</span><span
+                                    class="text-gray-400">Proficient ⭐⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 rounded-full skill-fill" style="width:80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>JavaScript</span><span
+                                    class="text-gray-400">Experienced ⭐⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 rounded-full skill-fill" style="width:75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5"><span>Vue.js</span><span
+                                    class="text-gray-400">Intermediate ⭐⭐⭐</span></div>
+                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-400 rounded-full skill-fill" style="width:65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <p class="text-xs text-blue-500 mb-5 uppercase tracking-widest">// AI Tools &amp; Assistants</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div
+                        class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                        <div>
+                            <div class="text-sm font-semibold" style="font-family:var(--font-display)">Claude AI</div>
+                            <div class="text-xs text-gray-500">Coding &amp; Reasoning</div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                        <div>
+                            <div class="text-sm font-semibold" style="font-family:var(--font-display)">Grok AI</div>
+                            <div class="text-xs text-gray-500">xAI • Creative &amp; Technical</div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                        <div>
+                            <div class="text-sm font-semibold" style="font-family:var(--font-display)">ChatGPT</div>
+                            <div class="text-xs text-gray-500">General Assistance &amp; Learning</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">Laravel</div>
+                        <div class="text-xs text-gray-500">PHP Framework</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">Vue.js</div>
+                        <div class="text-xs text-gray-500">Frontend</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">Java</div>
+                        <div class="text-xs text-gray-500">OOP + GUI</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">MySQL</div>
+                        <div class="text-xs text-gray-500">Database</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">Tailwind</div>
+                        <div class="text-xs text-gray-500">CSS Framework</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">JavaScript</div>
+                        <div class="text-xs text-gray-500">Scripting</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">HTML / CSS</div>
+                        <div class="text-xs text-gray-500">Markup &amp; Style</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center gap-3 hover:border-blue-500/40 transition">
+                    <div>
+                        <div class="text-sm font-semibold" style="font-family:var(--font-display)">Git / GitHub</div>
+                        <div class="text-xs text-gray-500">Version Control</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24 grid-bg transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6">
+            <p class="section-label">04 / projects</p>
+            <h3 class="text-4xl font-bold mb-4" style="font-family:var(--font-display)">Projects</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-xs mb-12">
+                <span class="text-blue-400">//</span> 4 real systems, built from scratch. Not tutorials — actual working
+                apps I'm proud of.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+
+                <div class="project-card bg-white dark:bg-[#161b22] rounded-xl p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <span
+                            class="text-xs bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded">Capstone</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2" style="font-family:var(--font-display)">Point of Sale (POS)
+                        System</h4>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                        My capstone project — a full POS system for small businesses. Handles products, transactions,
+                        receipts, and sales history. The most complex system I've built. Learned a lot about handling
+                        real business logic.
+                    </p>
+                    <div class="terminal mb-4">
+                        <div class="terminal-header">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="terminal-body" style="font-size:0.72rem;padding:14px">
+                            <span class="t-comment">// Features</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Product &amp; category
+                                management</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Sales transactions &amp;
+                                cart</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Receipt generation</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Sales history &amp; reporting</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Tailwind</span>
+                    </div>
+                    <div
+                        class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs">
+                        <a href="https://systemposcec.unaux.com/" target="_blank"
+                            class="flex items-center gap-2 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 4L2 8l4 4" />
+                            </svg>
+                            View Live on Website
+                        </a>
+                        <span class="text-gray-400 dark:text-gray-500 text-[10px] text-right">
+                            For portfolio purposes only.<br>
+                            Please do not copy or reproduce.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="project-card bg-white dark:bg-[#161b22] rounded-xl p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <span
+                            class="text-xs bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded">Capstone</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2" style="font-family:var(--font-display)">Student Offense System
+                    </h4>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                        Second capstone — built for schools to manage student disciplinary records. Tracks offenses,
+                        sanctions, and case histories. Introduced me to role-based access and more structured data
+                        management.
+                    </p>
+                    <div class="terminal mb-4">
+                        <div class="terminal-header">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="terminal-body" style="font-size:0.72rem;padding:14px">
+                            <span class="t-comment">// Features</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Student offense logging</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Sanction &amp; case
+                                management</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Student records &amp;
+                                history</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Role-based access
+                                (admin/staff)</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">SMTP</span><br>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Tailwind</span>
+                    </div>
+                    <div
+                        class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs">
+                        <a href="https://studentoffensecec.unaux.com/" target="_blank"
+                            class="flex items-center gap-2 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 4L2 8l4 4" />
+                            </svg>
+                            View Live on Website
+                        </a>
+                        <span class="text-gray-400 dark:text-gray-500 text-[10px] text-right">
+                            For portfolio purposes only.<br>
+                            Please do not copy or reproduce.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="project-card bg-white dark:bg-[#161b22] rounded-xl p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <span
+                            class="text-xs bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 px-2 py-1 rounded">OJT
+                            Project</span>
+
+                        <span
+                            class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                            <span class="text-blue-500"></span>
+                            UP Cebu
+                        </span>
+                    </div>
+
+                    <h4 class="text-xl font-bold mb-2" style="font-family:var(--font-display)">Inventory System</h4>
+
+                    <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                        Built during my On-the-Job Training (OJT) at the <span
+                            class="font-semibold text-blue-500">University of the Philippines Cebu (UP Cebu)</span>
+                        in just 3–4 months while actively learning Laravel. This system manages stock tracking, item
+                        records, and basic reporting.
+                        It was one of my first real-world deployable web applications — built under actual project
+                        deadlines and pressure.
+                    </p>
+
+                    <div class="terminal mb-4">
+                        <div class="terminal-header">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="terminal-body" style="font-size:0.72rem;padding:14px">
+                            <span class="t-comment">// Features</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Item CRUD (add, edit,
+                                delete)</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Stock level tracking</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">User authentication</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Reports &amp; search/filter</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Tailwind</span>
+                    </div>
+
+                    <div
+                        class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs">
+                        <a href="https://github.com/Jerecho2002/UP_INVENTORY" target="_blank"
+                            class="flex items-center gap-2 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 4L2 8l4 4" />
+                            </svg>
+                            View Code on GitHub
+                        </a>
+                        <span class="text-gray-400 dark:text-gray-500 text-[10px] text-right">
+                            For portfolio purposes only.<br>
+                            Please do not copy or reproduce.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="project-card bg-white dark:bg-[#161b22] rounded-xl p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <span
+                            class="text-xs bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 px-2 py-1 rounded">OJT
+                            Project</span>
+
+                        <span
+                            class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                            <span class="text-blue-500"></span>
+                            UP Cebu
+                        </span>
+                    </div>
+
+                    <h4 class="text-xl font-bold mb-2" style="font-family:var(--font-display)">Room & Inventory System
+                    </h4>
+
+                    <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed mb-4">
+                        Second system built during my On-the-Job Training (OJT) at the <span
+                            class="font-semibold text-blue-500">University of the Philippines Cebu (UP Cebu)</span>.
+                        Designed for school classrooms and labs, it manages room details, tracks equipment assigned from
+                        the inventory,
+                        and monitors usage. This project strengthened my skills in relational database design and
+                        real-world system integration.
+                    </p>
+
+                    <div class="terminal mb-4">
+                        <div class="terminal-header">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="terminal-body" style="font-size:0.72rem;padding:14px">
+                            <span class="t-comment">// Features</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Room management (add, edit,
+                                delete)</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Assign inventory equipment to
+                                rooms</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Track equipment usage and
+                                availability</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Search/filter rooms &amp;
+                                equipment</span><br>
+                            <span class="t-green">✓</span> <span class="t-string">Admin dashboard for monitoring</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Tailwind</span>
+                    </div>
+
+                    <div
+                        class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs">
+                        <a href="https://github.com/Jerecho2002/UP_ROOMS" target="_blank"
+                            class="flex items-center gap-2 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 4L2 8l4 4" />
+                            </svg>
+                            View Code on GitHub
+                        </a>
+                        <span class="text-gray-400 dark:text-gray-500 text-[10px] text-right">
+                            For portfolio purposes only.<br>
+                            Please do not copy or reproduce.
+                        </span>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 bg-white dark:bg-[#161b22] transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-6">
+            <p class="section-label">05 / contact</p>
+            <h3 class="text-4xl font-bold mb-4" style="font-family:var(--font-display)">Get In Touch</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mb-12 max-w-lg">
+                I'm looking for my first job or internship opportunity. If you think I'd be a good fit — or just want to
+                connect — I'd love to hear from you.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">// your_name</label>
+                        <input type="text" placeholder="Name"
+                            class="w-full p-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-[#0d1117] focus:outline-none focus:border-blue-500 transition placeholder-gray-400 dark:placeholder-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">// your_email</label>
+                        <input type="email" placeholder="email@example.com"
+                            class="w-full p-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-[#0d1117] focus:outline-none focus:border-blue-500 transition placeholder-gray-400 dark:placeholder-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">// message</label>
+                        <textarea rows="5" placeholder="Hi Jerecho, I'd like to connect..."
+                            class="w-full p-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-[#0d1117] focus:outline-none focus:border-blue-500 transition placeholder-gray-400 dark:placeholder-gray-600 resize-none"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-blue-500 text-white py-3 rounded-lg text-sm hover:bg-blue-600 hover:scale-[1.02] transition shadow-lg shadow-blue-500/20">
+                        send message
+                    </button>
+                </form>
+
+                <div class="space-y-6">
+                    <p class="text-xs text-blue-500 uppercase tracking-widest">// find me here</p>
+                    <div class="space-y-3">
+                        <a href="mailto:jerecholatosa2002@gmail.com"
+                            class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 transition group">
+                            <span
+                                class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/10 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8H3V8a2 2 0 012-2h14a2 2 0 012 2v8z" />
+                                </svg>
+                            </span>
+                            jerecholatosa2002@gmail.com
+                        </a>
+
+                        <a href="https://github.com/Jerecho2002" target="_blank"
+                            class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 transition group">
+                            <span
+                                class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/10 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400"
+                                    viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.167 6.84 9.49.5.09.68-.217.68-.483 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.343-3.369-1.343-.454-1.155-1.11-1.463-1.11-1.463-.907-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.528 2.341 1.087 2.91.832.091-.647.35-1.086.636-1.336-2.222-.253-4.555-1.111-4.555-4.943 0-1.091.39-1.985 1.03-2.683-.103-.253-.447-1.27.098-2.648 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.748-1.025 2.748-1.025.546 1.378.202 2.395.099 2.648.64.698 1.029 1.592 1.029 2.683 0 3.841-2.337 4.687-4.566 4.935.359.31.678.923.678 1.861 0 1.343-.012 2.426-.012 2.754 0 .268.18.578.688.481A10.012 10.012 0 0022 12c0-5.52-4.48-10-10-10z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                            github.com/Jerecho2002
+                        </a>
+                    </div>
+
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="terminal-body text-xs">
+                            <span class="t-prompt">~$</span> <span class="t-cmd">cat availability.txt</span><br><br>
+                            <span class="t-green">✓ Open to first job opportunities</span><br>
+                            <span class="t-green">✓ Available for freelance projects</span><br>
+                            <span class="t-green">✓ Happy to learn &amp; collaborate</span><br>
+                            <span class="t-comment">// Response time: within 24hrs</span><br><br>
+                            <span class="t-prompt">~$</span> <span class="cursor"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 border-t border-gray-200 dark:border-gray-800 text-center">
+        <p class="text-xs text-gray-400">
+            <span class="text-blue-500">©</span> Jerecho —
+            crafted with <span class="text-blue-500">Laravel</span> + <span class="text-blue-500">Tailwind</span> + lots
+            of ☕
+        </p>
+        <p class="text-xs text-gray-500 mt-1">
+            <span class="text-blue-500">//</span> still learning, always building 🇵🇭
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
