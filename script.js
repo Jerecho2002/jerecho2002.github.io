@@ -6,6 +6,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const knob = toggleBtn?.querySelector('span');
     const sun = document.getElementById('sun-icon');
     const moon = document.getElementById('moon-icon');
+    const mobileToggle = document.getElementById('mobile-theme-toggle');
+    const mobileKnob = mobileToggle?.querySelector('span');
+    const mobileSun = document.getElementById('mobile-sun-icon');
+    const mobileMoon = document.getElementById('mobile-moon-icon');
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            const isDarkNow = !document.documentElement.classList.contains('dark');
+            
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+
+            // Move the knob
+            if (mobileKnob) {
+                mobileKnob.style.transform = isDarkNow ? 'translateX(20px)' : 'translateX(0)';
+            }
+
+            // Toggle icons with small delay for smooth animation
+            setTimeout(() => {
+                mobileSun?.classList.toggle('hidden');
+                mobileMoon?.classList.toggle('hidden');
+            }, 80);
+        });
+    }
 
     function initTheme() {
         const savedTheme = localStorage.getItem('theme');
