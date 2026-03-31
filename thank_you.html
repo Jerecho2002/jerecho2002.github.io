@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-colors duration-300">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Sent — Jerecho</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            content: [],
+            darkMode: 'class',
+            theme: { extend: {} }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Syne', sans-serif;
+        }
+
+        * { font-family: var(--font-mono); }
+        h1, h2, h3, h4, h5 { font-family: var(--font-display); }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.09) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.09) 1px, transparent 1px);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50%       { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 480px;
+            height: 480px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0;
+            width: 0; height: 1px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .terminal {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red    { background: #ff5f57; }
+        .dot-yellow { background: #febc2e; }
+        .dot-green  { background: #28c840; }
+        .terminal-body {
+            padding: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: #e6edf3;
+            line-height: 1.9;
+        }
+        .t-prompt  { color: #3b82f6; }
+        .t-cmd     { color: #79c0ff; }
+        .t-comment { color: #6e7681; }
+        .t-string  { color: #a5d6ff; }
+        .t-key     { color: #ff7b72; }
+        .t-val     { color: #ffa657; }
+        .t-green   { color: #28c840; }
+
+        .cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #3b82f6;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in   { animation: fadeInUp 0.6s ease both; }
+        .fade-in-1 { animation-delay: 0.10s; }
+        .fade-in-2 { animation-delay: 0.25s; }
+        .fade-in-3 { animation-delay: 0.40s; }
+        .fade-in-4 { animation-delay: 0.55s; }
+        .fade-in-5 { animation-delay: 0.70s; }
+
+        @keyframes draw-circle {
+            from { stroke-dashoffset: 283; }
+            to   { stroke-dashoffset: 0; }
+        }
+        @keyframes draw-check {
+            from { stroke-dashoffset: 60; }
+            to   { stroke-dashoffset: 0; }
+        }
+        .circle-path {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            animation: draw-circle 0.7s ease 0.3s forwards;
+        }
+        .check-path {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: draw-check 0.4s ease 0.9s forwards;
+        }
+
+        @keyframes reveal-line {
+            from { opacity: 0; transform: translateX(-6px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .t-line-1 { animation: reveal-line 0.3s ease 1.2s both; }
+        .t-line-2 { animation: reveal-line 0.3s ease 1.5s both; }
+        .t-line-3 { animation: reveal-line 0.3s ease 1.8s both; }
+        .t-line-4 { animation: reveal-line 0.3s ease 2.1s both; }
+        .t-line-5 { animation: reveal-line 0.3s ease 2.4s both; }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            padding: 2px 10px;
+            border-radius: 4px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            white-space: nowrap;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-bottom: 8px;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 2px; }
+
+        .back-btn { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
+        }
+
+        .confetti-wrap {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .confetti-piece {
+            position: absolute;
+            top: -10px;
+            opacity: 0;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-[#0d1117] dark:text-gray-100 transition-colors duration-300">
+
+    <!-- Nav -->
+    <nav class="fixed w-full bg-white/80 dark:bg-[#0d1117]/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 z-50 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-blue-500 text-sm">~/$</span>
+                <a href="index.html"
+                   class="text-base font-bold tracking-tight hover:text-blue-500 transition-colors duration-200"
+                   style="font-family:var(--font-display)">
+                    jerecho.dev
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-6">
+                <div class="flex gap-6">
+                    <a href="index.html#about"    class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">about</a>
+                    <a href="index.html#journey"  class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">journey</a>
+                    <a href="index.html#stack"    class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">stack</a>
+                    <a href="index.html#projects" class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">projects</a>
+                    <a href="index.html#contact"  class="nav-link text-gray-500 dark:text-gray-400 hover:text-blue-500">contact</a>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-green-600 dark:text-green-400">
+                    <div class="status-dot"></div>
+                    open to work
+                </div>
+                <button id="theme-toggle" aria-label="Toggle dark mode"
+                    class="relative w-16 h-9 bg-gray-200 dark:bg-zinc-700 rounded-3xl flex items-center px-1 transition-all duration-500 shadow-inner hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500/50">
+                    <span id="toggle-knob" class="absolute left-1 w-7 h-7 bg-white dark:bg-zinc-900 rounded-2xl shadow-lg transform transition-all duration-500 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-amber-400 dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.485-8.485h-1M4.515 12.515h-1M16.95 7.05l-.707.707M7.757 16.243l-.707.707M16.95 16.95l-.707-.707M7.757 7.757l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-zinc-300 hidden dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="min-h-screen flex items-center justify-center text-center px-6 relative overflow-hidden grid-bg pt-20">
+
+        <div class="confetti-wrap" id="confetti"></div>
+        <div class="hero-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto w-full">
+
+            <!-- Animated checkmark -->
+            <div class="fade-in fade-in-1 flex justify-center mb-8">
+                <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="rgba(59,130,246,0.15)" stroke-width="2" fill="rgba(59,130,246,0.06)"/>
+                    <circle cx="50" cy="50" r="45" stroke="#3b82f6" stroke-width="2.5" fill="none" class="circle-path"/>
+                    <polyline points="30,52 44,66 70,36" stroke="#3b82f6" stroke-width="3.5"
+                        stroke-linecap="round" stroke-linejoin="round" class="check-path"/>
+                </svg>
+            </div>
+
+            <!-- Heading -->
+            <p class="fade-in fade-in-2 section-label flex items-center justify-center gap-2">
+                <span class="text-blue-500">▶</span> message_sent.log
+            </p>
+            <h1 class="fade-in fade-in-2 text-5xl md:text-6xl font-extrabold mb-3 tracking-tight leading-none"
+                style="font-family:var(--font-display)">
+                Message <span class="text-blue-500">Received!</span>
+            </h1>
+            <p class="fade-in fade-in-3 text-gray-500 dark:text-gray-400 text-sm mb-2">
+                <span class="text-blue-400">//</span> Thanks for reaching out — I'll get back to you within 24 hours.
+            </p>
+            <p class="fade-in fade-in-3 text-gray-400 dark:text-gray-500 text-xs mb-10">
+                While you wait, feel free to check out my work below.
+            </p>
+
+            <!-- Terminal log -->
+            <div class="fade-in fade-in-4 terminal text-left mb-8 max-w-md mx-auto">
+                <div class="terminal-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <span style="color:#6e7681;font-size:0.72rem;margin-left:8px">message.log</span>
+                </div>
+                <div class="terminal-body text-xs">
+                    <span class="t-comment t-line-1" style="display:block">// Incoming message detected</span>
+                    <span class="t-green t-line-2" style="display:block">✓ Form submitted successfully</span>
+                    <span class="t-green t-line-3" style="display:block">✓ Email delivered to Jerecho</span>
+                    <span class="t-string t-line-4" style="display:block">"Response time: ~24 hours"</span>
+                    <span class="t-line-5" style="display:block"><span class="t-prompt">~$</span> <span class="cursor"></span></span>
+                </div>
+            </div>
+
+            <!-- CTA buttons -->
+            <div class="fade-in fade-in-5 flex flex-wrap justify-center gap-3 mb-12">
+                <a href="index.html"
+                   class="back-btn bg-blue-500 text-white px-6 py-2.5 rounded-md text-sm hover:bg-blue-600 transition shadow-lg shadow-blue-500/20">
+                    ← Back to Portfolio
+                </a>
+                <a href="index.html#projects"
+                   class="back-btn border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 px-6 py-2.5 rounded-md text-sm hover:border-blue-500 hover:text-blue-500 transition">
+                    View My Projects
+                </a>
+            </div>
+
+            <!-- Tags -->
+            <div class="fade-in fade-in-5 flex flex-wrap justify-center gap-2">
+                <span class="tag">🇵🇭 Cebu City</span>
+                <span class="tag">Open to work</span>
+                <span class="tag">Laravel · Vue · PHP</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-8 border-t border-gray-200 dark:border-gray-800 text-center">
+        <p class="text-xs text-gray-400">
+            <span class="text-blue-500">©</span> Jerecho —
+            crafted with <span class="text-blue-500">Laravel</span> + <span class="text-blue-500">Tailwind</span> + lots of ☕
+        </p>
+        <p class="text-xs text-gray-500 mt-1">
+            <span class="text-blue-500">//</span> still learning, always building 🇵🇭
+        </p>
+    </footer>
+
+    <script>
+        // Dark mode sync
+        const html = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark' ||
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        function syncKnob() {
+            const knob = document.getElementById('toggle-knob');
+            if (!knob) return;
+            knob.style.transform = html.classList.contains('dark') ? 'translateX(28px)' : 'translateX(0)';
+        }
+        syncKnob();
+
+        document.getElementById('theme-toggle')?.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+            syncKnob();
+        });
+
+        // Confetti burst
+        function spawnConfetti() {
+            const container = document.getElementById('confetti');
+            const colors = ['#3b82f6', '#60a5fa', '#93c5fd', '#1d4ed8', '#bfdbfe', '#ffffff'];
+            for (let i = 0; i < 65; i++) {
+                const el = document.createElement('div');
+                el.className = 'confetti-piece';
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 6 + 4;
+                el.style.width  = size + 'px';
+                el.style.height = size + 'px';
+                el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                el.style.animationDuration = (Math.random() * 2.5 + 1.5) + 's';
+                el.style.animationDelay   = (Math.random() * 0.8) + 's';
+                container.appendChild(el);
+                el.addEventListener('animationend', () => el.remove());
+            }
+        }
+
+        setTimeout(spawnConfetti, 400);
+    </script>
+</body>
+</html>

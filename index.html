@@ -1129,28 +1129,37 @@
             </p>
 
             <div class="grid md:grid-cols-2 gap-12">
-                <form class="space-y-4">
+               <form action="https://formspree.io/f/xojpwryg" method="POST" class="space-y-4">
+
+                <input type="hidden" name="_redirect" value="https://jerecho2002.github.io//thank_you.html">
+
+                <input type="text" name="_gotcha" style="display:none">
+    
                     <div>
                         <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">// your_name</label>
-                        <input type="text" placeholder="Name"
+                        <input type="text" name="name" placeholder="optional"
                             class="w-full p-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-[#0d1117] focus:outline-none focus:border-blue-500 transition placeholder-gray-400 dark:placeholder-gray-600">
                     </div>
+
                     <div>
                         <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">// your_email</label>
-                        <input type="email" placeholder="email@example.com"
+                        <input type="email" name="email" placeholder="email@example.com" required
                             class="w-full p-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-[#0d1117] focus:outline-none focus:border-blue-500 transition placeholder-gray-400 dark:placeholder-gray-600">
                     </div>
+
                     <div>
                         <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">// message</label>
-                        <textarea rows="5" placeholder="Hi Jerecho, I'd like to connect..."
+                        <textarea name="message" rows="5" required
+                            placeholder="Hi Jerecho, I'd like to connect..."
                             class="w-full p-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-[#0d1117] focus:outline-none focus:border-blue-500 transition placeholder-gray-400 dark:placeholder-gray-600 resize-none"></textarea>
                     </div>
+
                     <button type="submit"
                         class="w-full bg-blue-500 text-white py-3 rounded-lg text-sm hover:bg-blue-600 hover:scale-[1.02] transition shadow-lg shadow-blue-500/20">
                         send message
                     </button>
-                </form>
 
+                </form>
                 <div class="space-y-6">
                     <p class="text-xs text-blue-500 uppercase tracking-widest">// find me here</p>
                     <div class="space-y-3">
